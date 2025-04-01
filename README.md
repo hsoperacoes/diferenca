@@ -53,6 +53,7 @@
             display: flex;
             flex-direction: column;
             gap: 5px;
+            padding-left: 20px; /* Alinhamento para a esquerda */
         }
 
         .checkbox-group label {
