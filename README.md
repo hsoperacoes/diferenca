@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
@@ -27,7 +28,8 @@
             border-radius: 8px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             width: 100%;
-            max-width: 800px;
+            max-width: 500px;
+            display: none; /* Inicialmente escondido */
         }
 
         h2 {
@@ -44,8 +46,9 @@
         label {
             font-size: 14px;
             font-weight: bold;
-            display: block;
-            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
         input, select {
@@ -71,16 +74,48 @@
         .form-group button:hover {
             background-color: #45a049;
         }
+
+        .login-container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+        }
+
+        .login-container input {
+            margin-bottom: 15px;
+        }
     </style>
 </head>
 <body>
+    <!-- Tela de Login -->
+    <div class="login-container">
+        <h2>Login</h2>
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="username">Usuário</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Senha</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div class="form-group">
+                <button type="submit">Entrar</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Formulário de Cadastro de Divergências (escondido inicialmente) -->
     <div class="form-container">
         <h2>Divergências em Notas Fiscais</h2>
         <form action="https://formspree.io/f/{your_form_id}" method="POST">
             <div class="form-group">
-                <label for="filial">Filial</label>
-                <select name="filial" id="filial" required>
-                    <option value="">Selecione a Filial</option>
+                <label>Filial</label>
+                <select name="filial" required>
                     <option value="ARTUR">ARTUR</option>
                     <option value="FLORIANO">FLORIANO</option>
                     <option value="JOTA">JOTA</option>
@@ -90,9 +125,8 @@
             </div>
 
             <div class="form-group">
-                <label for="transportadora">Transportadora</label>
-                <select name="transportadora" id="transportadora" required>
-                    <option value="">Selecione a Transportadora</option>
+                <label>Transportadora</label>
+                <select name="transportadora" required>
                     <option value="BRASPRESS">BRASPRESS</option>
                     <option value="OUTROS">OUTROS</option>
                 </select>
@@ -139,8 +173,8 @@
             </div>
 
             <div class="form-group">
-                <label for="divergencia">Divergência</label>
-                <select name="divergencia" id="divergencia" required>
+                <label>Divergência</label>
+                <select name="divergencia" required>
                     <option value="">Selecione uma opção</option>
                     <option value="MERCADORIA PASSANDO">MERCADORIA PASSANDO</option>
                     <option value="MERCADORIA FALTANDO">MERCADORIA FALTANDO</option>
@@ -154,8 +188,24 @@
     </div>
 
     <script>
-        document.getElementById('transportadora').addEventListener('change', function() {
-            document.getElementById('outrosTransportadora').style.display = this.value === 'OUTROS' ? 'block' : 'none';
+        // Validação do login
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            // Usuário e senha pré-definidos
+            const correctUsername = 'admin';
+            const correctPassword = 'senha123';
+
+            if (username === correctUsername && password === correctPassword) {
+                // Login bem-sucedido
+                document.querySelector('.login-container').style.display = 'none';  // Esconde a tela de login
+                document.querySelector('.form-container').style.display = 'block'; // Mostra o formulário de cadastro
+            } else {
+                alert('Usuário ou senha incorretos!');
+            }
         });
     </script>
 </body>
