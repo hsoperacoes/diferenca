@@ -73,11 +73,32 @@
             background-color: #45a049;
         }
     </style>
+    <script>
+        function enviarFormulario(event) {
+            event.preventDefault();
+            
+            var form = document.getElementById("formulario");
+            var formData = new FormData(form);
+            
+            fetch("https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec", {
+                method: "POST",
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert("Cadastro enviado com sucesso!");
+                form.reset();
+            })
+            .catch(error => {
+                alert("Erro ao enviar o formulário. Tente novamente.");
+            });
+        }
+    </script>
 </head>
 <body>
     <div class="form-container" id="formContainer">
         <h2>Divergências em Notas Fiscais</h2>
-        <form action="https://formspree.io/f/{your_form_id}" method="POST">
+        <form id="formulario" onsubmit="enviarFormulario(event)">
             <div class="form-group">
                 <label>Filial</label>
                 <select name="filial" required>
