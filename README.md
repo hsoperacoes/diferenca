@@ -12,65 +12,65 @@
 
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
+            background-color: #f8f9fa;
             display: flex;
             justify-content: center;
-            align-items: flex-start;
+            align-items: center;
             min-height: 100vh;
-            overflow-y: auto;
             padding: 20px;
         }
 
         .form-container {
             background: white;
-            padding: 30px;
+            padding: 24px;
             border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            width: 90%;
-            max-width: 1000px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
         }
 
         h2 {
             text-align: center;
             margin-bottom: 20px;
-            font-size: 24px;
-            color: #4CAF50;
+            font-size: 22px;
+            color: #202124;
         }
 
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 16px;
         }
 
         label {
             font-size: 14px;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            font-weight: 600;
+            display: block;
+            margin-bottom: 5px;
+            color: #5f6368;
         }
 
         input, select {
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             font-size: 14px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            margin-top: 5px;
+            border: 1px solid #dadce0;
+            border-radius: 4px;
+            background-color: #fff;
         }
 
         .form-group button {
-            background-color: #4CAF50;
+            background-color: #1a73e8;
             color: white;
             border: none;
             padding: 12px;
-            border-radius: 5px;
+            border-radius: 4px;
             font-size: 16px;
             width: 100%;
             cursor: pointer;
+            font-weight: 600;
         }
 
         .form-group button:hover {
-            background-color: #45a049;
+            background-color: #1765c1;
         }
     </style>
     <script>
