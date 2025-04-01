@@ -27,8 +27,8 @@
             border-radius: 8px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             width: 100%;
-            max-width: 800px;  /* A largura foi aumentada para 800px */
-            display: none; /* Inicialmente escondido */
+            max-width: 800px;  /* Largura aumentada */
+            display: none;
         }
 
         h2 {
@@ -132,6 +132,7 @@
                 </select>
             </div>
 
+            <!-- Campo de texto para o nome da transportadora "OUTROS" -->
             <div class="form-group" id="outrosTransportadora" style="display: none;">
                 <label for="outraTransportadora">Qual é a Transportadora?</label>
                 <input type="text" id="outraTransportadora" name="outraTransportadora">
@@ -192,9 +193,9 @@
         document.getElementById('transportadora').addEventListener('change', function() {
             const outrosField = document.getElementById('outrosTransportadora');
             if (this.value === 'OUTROS') {
-                outrosField.style.display = 'block';
+                outrosField.style.display = 'block';  // Exibe o campo
             } else {
-                outrosField.style.display = 'none';
+                outrosField.style.display = 'none';  // Esconde o campo
             }
         });
 
