@@ -86,7 +86,7 @@
             })
             .then(response => response.json())
             .then(data => {
-                alert("Cadastro enviado com sucesso!");
+                alert("SUA DIVERGÊNCIA FOI ENVIADA COM SUCESSO, AGRADECEMOS SEU APOIO");
                 form.reset();
             })
             .catch(error => {
