@@ -190,8 +190,11 @@
         // Defina os usuários e senhas permitidos
         const users = [
             { username: 'admin', password: 'senha123' },
-            { username: 'user1', password: 'senha456' },
-            { username: 'user2', password: 'senha789' }
+            { username: 'a', password: 'hering0277' },
+            { username: 'f', password: 'hering0277' },
+            { username: 'j', password: 'hering0277' },
+            { username: 'm', password: 'hering0277' },
+            { username: 'p', password: 'hering0277' }
         ];
 
         // Função para verificar o login
