@@ -111,11 +111,11 @@
     <!-- Formulário de Cadastro de Divergências (escondido inicialmente) -->
     <div class="form-container" id="formContainer">
         <h2>Divergências em Notas Fiscais</h2>
-        <form id="divergenciaForm">
+        <form id="divergenciaForm" action="https://formspree.io/f/{your_form_id}" method="POST">
             <div class="form-group">
                 <label>Filial</label>
                 <select name="filial" required>
-                    <option value="">Selecione uma filial</option>
+                    <option value="">Selecione uma filial</option>  <!-- Removi a preseleção -->
                     <option value="ARTUR">ARTUR</option>
                     <option value="FLORIANO">FLORIANO</option>
                     <option value="JOTA">JOTA</option>
@@ -199,51 +199,17 @@
             }
         });
 
-        // Validação do login
-        document.getElementById('loginForm').addEventListener('submit', function(event) {
-            event.preventDefault();
+        // Defina os usuários e senhas permitidos
+        const users = [
+            { username: 'admin', password: 'senha123' },
+            { username: 'a', password: 'hering0277' },
+            { username: 'f', password: 'hering0277' },
+            { username: 'j', password: 'hering0277' },
+            { username: 'm', password: 'hering0277' },
+            { username: 'p', password: 'hering0277' }
+        ];
 
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-
-            // Verificar se as credenciais correspondem a algum usuário da lista
-            const users = [
-                { username: 'admin', password: 'senha123' },
-                { username: 'a', password: 'hering0277' },
-                { username: 'f', password: 'hering0277' },
-                { username: 'j', password: 'hering0277' },
-                { username: 'm', password: 'hering0277' },
-                { username: 'p', password: 'hering0277' }
-            ];
-
-            const user = users.find(u => u.username === username && u.password === password);
-
-            if (user) {
-                // Login bem-sucedido
-                localStorage.setItem('loggedIn', 'true');
-                checkLogin();
-            } else {
-                alert('Usuário ou senha incorretos!');
-            }
-        });
-
-        // Função para monitorar inatividade
-        let idleTimeout;
-
-        function resetIdleTimer() {
-            clearTimeout(idleTimeout);
-            idleTimeout = setTimeout(() => {
-                alert("Você foi deslogado por inatividade!");
-                localStorage.setItem('loggedIn', 'false');
-                checkLogin();
-            }, 600000);
-        }
-
-        // Detectar atividade do usuário
-        document.addEventListener('mousemove', resetIdleTimer);
-        document.addEventListener('keydown', resetIdleTimer);
-
-        // Inicializar o estado de login ao carregar a página
+        // Função para verificar o login
         function checkLogin() {
             if (localStorage.getItem('loggedIn') === 'true') {
                 document.querySelector('.login-container').style.display = 'none';
@@ -254,13 +220,54 @@
             }
         }
 
-        checkLogin();
+        // Validação do login
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            // Verificar se as credenciais correspondem a algum usuário da lista
+            const user = users.find(u => u.username === username && u.password === password);
+
+            if (user) {
+                // Login bem-sucedido
+                localStorage.setItem('loggedIn', 'true');  // Salva no localStorage que o usuário está logado
+                checkLogin();  // Atualiza a interface
+            } else {
+                alert('Usuário ou senha incorretos!');
+            }
+        });
 
         // Enviar dados do formulário para o Google Apps Script
-        document.querySelector("#divergenciaForm").addEventListener("submit", function(event) {
+        document.querySelector("#divergenciaForm").addEventListener("submit", function (event) {
             event.preventDefault();
 
             const form = event.target;
             const formData = new FormData(form);
 
-            fetch("https://script.google.com/macros/s/AKfycbw5xq6i5Qoc0s3f-ZaQ6FCZdsjXrC_my8d0tmgr756hWZQqT9Olu9DjsGO_
+            fetch("https://script.google.com/macros/s/AKfycbw5xq6i5Qoc0s3f-ZaQ6FCZdsjXrC_my8d0tmgr756hWZQqT9Olu9DjsGOYwTlvnBQA/exec", {
+                method: "POST",
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.result === "success") {
+                    alert("Dados enviados com sucesso!");
+                    form.reset();  // Limpa os campos do formulário
+                    checkLogin();  // Retorna ao login
+                } else {
+                    alert("Erro ao enviar os dados.");
+                }
+            })
+            .catch(error => {
+                console.error("Erro:", error);
+                alert("Erro na conexão com o servidor.");
+            });
+        });
+
+        // Inicializar o estado de login ao carregar a página
+        checkLogin();
+    </script>
+</body>
+</html>
