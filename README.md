@@ -19,6 +19,7 @@
             min-height: 100vh;
             overflow-y: auto;
             padding: 20px;
+            position: relative; /* Adicionado para posicionamento do logo */
         }
 
         .form-container {
@@ -28,6 +29,7 @@
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             width: 90%;
             max-width: 1000px;
+            margin-bottom: 60px; /* Espaço para o logo */
         }
 
         h2 {
@@ -72,6 +74,20 @@
         .form-group button:hover {
             background-color: #45a049;
         }
+
+        /* Estilos para o logo */
+        .logo-hering {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 150px;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+
+        .logo-hering:hover {
+            opacity: 1;
+        }
     </style>
     <script>
         function enviarFormulario(event) {
@@ -93,6 +109,12 @@
                 alert("Erro ao enviar o formulário. Tente novamente.");
             });
         }
+
+        // Mostrar campo de transportadora quando selecionar "OUTROS"
+        document.getElementById('transportadora').addEventListener('change', function() {
+            const outrosField = document.getElementById('outrosTransportadora');
+            outrosField.style.display = this.value === 'OUTROS' ? 'block' : 'none';
+        });
     </script>
 </head>
 <body>
@@ -173,5 +195,10 @@
             </div>
         </form>
     </div>
+
+    <!-- Logo Hering -->
+    <img src="https://www.hering.com.br/static/version1713444914/frontend/Hering/default/pt_BR/images/logo.svg" 
+         alt="Logo Hering" 
+         class="logo-hering">
 </body>
 </html>
