@@ -27,7 +27,7 @@
             border-radius: 8px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             width: 100%;
-            max-width: 1750px;  /* Aumentei a largura máxima para 600px */
+            max-width: 800px;  /* A largura foi aumentada para 800px */
             display: none; /* Inicialmente escondido */
         }
 
@@ -126,7 +126,7 @@
 
             <div class="form-group">
                 <label>Transportadora</label>
-                <select name="transportadora" required>
+                <select name="transportadora" id="transportadora" required>
                     <option value="BRASPRESS">BRASPRESS</option>
                     <option value="OUTROS">OUTROS</option>
                 </select>
@@ -188,6 +188,16 @@
     </div>
 
     <script>
+        // Exibir o campo de transportadora "OUTROS" quando selecionado
+        document.getElementById('transportadora').addEventListener('change', function() {
+            const outrosField = document.getElementById('outrosTransportadora');
+            if (this.value === 'OUTROS') {
+                outrosField.style.display = 'block';
+            } else {
+                outrosField.style.display = 'none';
+            }
+        });
+
         // Defina os usuários e senhas permitidos
         const users = [
             { username: 'admin', password: 'senha123' },
