@@ -27,7 +27,7 @@
             border-radius: 8px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             width: 100%;
-            max-width: 750px;  /* Aumentei a largura máxima para 600px */
+            max-width: 1750px;  /* Aumentei a largura máxima para 600px */
             display: none; /* Inicialmente escondido */
         }
 
