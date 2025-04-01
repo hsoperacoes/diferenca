@@ -19,6 +19,7 @@
             align-items: flex-start;
             min-height: 100vh;
             overflow-y: auto;
+            padding: 20px;
         }
 
         .form-container {
@@ -27,7 +28,7 @@
             border-radius: 8px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             width: 100%;
-            max-width: 800px;
+            max-width: 1000px;
         }
 
         h2 {
@@ -39,21 +40,33 @@
 
         .form-group {
             margin-bottom: 20px;
+            display: flex;
+            align-items: center;
         }
 
         label {
-            display: block;
             font-size: 14px;
-            margin-bottom: 8px;
             font-weight: bold;
+            margin-right: 15px;
+            min-width: 150px;
         }
 
         input, select {
-            width: 100%;
+            flex: 1;
             padding: 10px;
             font-size: 14px;
             border: 1px solid #ddd;
             border-radius: 5px;
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .checkbox-group input {
+            margin-right: 5px;
         }
 
         .note {
@@ -85,67 +98,65 @@
             <!-- Campo Filial -->
             <div class="form-group">
                 <label>Filial</label>
-                <input type="checkbox" name="filial" value="ARTUR"> ARTUR
-                <input type="checkbox" name="filial" value="FLORIANO"> FLORIANO
-                <input type="checkbox" name="filial" value="JOTA"> JOTA
-                <input type="checkbox" name="filial" value="MODA"> MODA
-                <input type="checkbox" name="filial" value="PONTO"> PONTO
+                <div class="checkbox-group">
+                    <label><input type="checkbox" name="filial" value="ARTUR"> ARTUR</label>
+                    <label><input type="checkbox" name="filial" value="FLORIANO"> FLORIANO</label>
+                    <label><input type="checkbox" name="filial" value="JOTA"> JOTA</label>
+                    <label><input type="checkbox" name="filial" value="MODA"> MODA</label>
+                    <label><input type="checkbox" name="filial" value="PONTO"> PONTO</label>
+                </div>
             </div>
 
             <!-- Campo Transportadora -->
             <div class="form-group">
                 <label>Transportadora</label>
-                <input type="checkbox" name="transportadora" value="BRASPRESS"> BRASPRESS
-                <input type="checkbox" id="chkOutros" value="OUTROS"> OUTROS
-                <div id="outrosTransportadora" style="display: none;">
-                    <label for="outraTransportadora">Qual é a Transportadora?</label>
-                    <input type="text" id="outraTransportadora" name="outraTransportadora">
+                <div class="checkbox-group">
+                    <label><input type="checkbox" name="transportadora" value="BRASPRESS"> BRASPRESS</label>
+                    <label><input type="checkbox" id="chkOutros" value="OUTROS"> OUTROS</label>
                 </div>
             </div>
 
-            <!-- Campo Data de Recebimento -->
+            <div class="form-group" id="outrosTransportadora" style="display: none;">
+                <label for="outraTransportadora">Qual é a Transportadora?</label>
+                <input type="text" id="outraTransportadora" name="outraTransportadora">
+            </div>
+
+            <!-- Restante do formulário -->
             <div class="form-group">
                 <label for="dataRecebimento">Data de Recebimento</label>
                 <input type="date" id="dataRecebimento" name="dataRecebimento" required>
             </div>
 
-            <!-- Campo Nota Fiscal -->
             <div class="form-group">
                 <label for="notaFiscal">Número da Nota Fiscal</label>
                 <input type="text" id="notaFiscal" name="notaFiscal" required>
             </div>
 
-            <!-- Campo Série da Nota Fiscal -->
             <div class="form-group">
                 <label for="serieNota">Série da Nota Fiscal</label>
                 <input type="text" id="serieNota" name="serieNota" required>
             </div>
 
-            <!-- Campo Referência -->
             <div class="form-group">
                 <label for="referencia">Referência</label>
                 <input type="text" id="referencia" name="referencia" maxlength="4" required>
             </div>
 
-            <!-- Campo Cor -->
             <div class="form-group">
                 <label for="cor">Cor</label>
                 <input type="text" id="cor" name="cor" maxlength="6" required>
             </div>
 
-            <!-- Campo Tamanho -->
             <div class="form-group">
                 <label for="tamanho">Tamanho</label>
                 <input type="text" id="tamanho" name="tamanho" required>
             </div>
 
-            <!-- Campo Quantidade -->
             <div class="form-group">
                 <label for="quantidade">Quantidade</label>
                 <input type="number" id="quantidade" name="quantidade" required>
             </div>
 
-            <!-- Campo Divergência -->
             <div class="form-group">
                 <label>Divergência</label>
                 <select name="divergencia" required>
@@ -155,7 +166,6 @@
                 </select>
             </div>
 
-            <!-- Botão Enviar -->
             <div class="form-group">
                 <button type="submit">Enviar</button>
             </div>
