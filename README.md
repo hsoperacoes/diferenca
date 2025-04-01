@@ -27,7 +27,7 @@
             border-radius: 8px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             width: 100%;
-            max-width: 500px;
+            max-width: 750px;  /* Aumentei a largura máxima para 600px */
             display: none; /* Inicialmente escondido */
         }
 
@@ -115,6 +115,7 @@
             <div class="form-group">
                 <label>Filial</label>
                 <select name="filial" required>
+                    <option value="">Selecione uma filial</option>  <!-- Removi a preseleção -->
                     <option value="ARTUR">ARTUR</option>
                     <option value="FLORIANO">FLORIANO</option>
                     <option value="JOTA">JOTA</option>
