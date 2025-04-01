@@ -49,22 +49,6 @@
             margin-bottom: 5px;
         }
 
-        .checkbox-group {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-            padding-left: 20px; /* Alinhamento para a esquerda */
-        }
-
-        .checkbox-group label {
-            display: flex;
-            align-items: center;
-        }
-
-        input[type="checkbox"] {
-            margin-right: 10px;
-        }
-
         input, select {
             width: 100%;
             padding: 10px;
@@ -95,22 +79,24 @@
         <h2>Divergências em Notas Fiscais</h2>
         <form action="https://formspree.io/f/{your_form_id}" method="POST">
             <div class="form-group">
-                <label>Filial</label>
-                <div class="checkbox-group">
-                    <label><input type="checkbox" name="filial" value="ARTUR">ARTUR</label>
-                    <label><input type="checkbox" name="filial" value="FLORIANO">FLORIANO</label>
-                    <label><input type="checkbox" name="filial" value="JOTA">JOTA</label>
-                    <label><input type="checkbox" name="filial" value="MODA">MODA</label>
-                    <label><input type="checkbox" name="filial" value="PONTO">PONTO</label>
-                </div>
+                <label for="filial">Filial</label>
+                <select name="filial" id="filial" required>
+                    <option value="">Selecione a Filial</option>
+                    <option value="ARTUR">ARTUR</option>
+                    <option value="FLORIANO">FLORIANO</option>
+                    <option value="JOTA">JOTA</option>
+                    <option value="MODA">MODA</option>
+                    <option value="PONTO">PONTO</option>
+                </select>
             </div>
 
             <div class="form-group">
-                <label>Transportadora</label>
-                <div class="checkbox-group">
-                    <label><input type="checkbox" name="transportadora" value="BRASPRESS">BRASPRESS</label>
-                    <label><input type="checkbox" id="chkOutros" value="OUTROS">OUTROS</label>
-                </div>
+                <label for="transportadora">Transportadora</label>
+                <select name="transportadora" id="transportadora" required>
+                    <option value="">Selecione a Transportadora</option>
+                    <option value="BRASPRESS">BRASPRESS</option>
+                    <option value="OUTROS">OUTROS</option>
+                </select>
             </div>
 
             <div class="form-group" id="outrosTransportadora" style="display: none;">
@@ -154,8 +140,8 @@
             </div>
 
             <div class="form-group">
-                <label>Divergência</label>
-                <select name="divergencia" required>
+                <label for="divergencia">Divergência</label>
+                <select name="divergencia" id="divergencia" required>
                     <option value="">Selecione uma opção</option>
                     <option value="MERCADORIA PASSANDO">MERCADORIA PASSANDO</option>
                     <option value="MERCADORIA FALTANDO">MERCADORIA FALTANDO</option>
@@ -169,8 +155,8 @@
     </div>
 
     <script>
-        document.getElementById('chkOutros').addEventListener('change', function() {
-            document.getElementById('outrosTransportadora').style.display = this.checked ? 'block' : 'none';
+        document.getElementById('transportadora').addEventListener('change', function() {
+            document.getElementById('outrosTransportadora').style.display = this.value === 'OUTROS' ? 'block' : 'none';
         });
     </script>
 </body>
