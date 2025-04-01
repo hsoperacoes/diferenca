@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
@@ -28,7 +29,6 @@
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             width: 100%;
             max-width: 800px;
-            display: none;
         }
 
         h2 {
@@ -76,9 +76,9 @@
     </style>
 </head>
 <body>
-    <div class="form-container" id="formContainer">
+    <div class="form-container">
         <h2>Divergências em Notas Fiscais</h2>
-        <form id="divergenciaForm">
+        <form id="divergenciaForm" action="https://formspree.io/f/{your_form_id}" method="POST">
             <div class="form-group">
                 <label>Filial</label>
                 <select name="filial" required>
@@ -155,37 +155,13 @@
     </div>
 
     <script>
-        document.querySelector("#divergenciaForm").addEventListener("submit", function (event) {
-            event.preventDefault();
-
-            const form = event.target;
-            const formData = new FormData(form);
-            const jsonData = {};
-
-            formData.forEach((value, key) => {
-                jsonData[key] = value;
-            });
-
-            fetch("https://script.google.com/macros/s/AKfycbw5xq6i5Qoc0s3f-ZaQ6FCZdsjXrC_my8d0tmgr756hWZQqT9Olu9DjsGOYwTlvnBQA/exec", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(jsonData)
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.status === "sucesso") {
-                    alert("Dados enviados com sucesso!");
-                    form.reset();
-                } else {
-                    alert("Erro ao enviar os dados: " + data.mensagem);
-                }
-            })
-            .catch(error => {
-                console.error("Erro:", error);
-                alert("Erro na conexão com o servidor.");
-            });
+        document.getElementById('transportadora').addEventListener('change', function() {
+            const outrosField = document.getElementById('outrosTransportadora');
+            if (this.value === 'OUTROS') {
+                outrosField.style.display = 'block';
+            } else {
+                outrosField.style.display = 'none';
+            }
         });
     </script>
 </body>
