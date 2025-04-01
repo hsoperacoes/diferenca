@@ -45,17 +45,19 @@
         label {
             font-size: 14px;
             font-weight: bold;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            display: block;
+            margin-bottom: 5px;
         }
 
         .checkbox-group {
             display: flex;
             flex-direction: column;
             gap: 5px;
-            margin-top: 5px;
-            padding-left: 20px;  /* Adiciona espaço para a esquerda */
+        }
+
+        .checkbox-group label {
+            display: flex;
+            align-items: center;
         }
 
         input[type="checkbox"] {
