@@ -22,16 +22,15 @@
             padding: 20px;
         }
 
-        .form-container, .login-container {
+        .form-container {
             background: white;
             padding: 30px;
             border-radius: 8px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             width: 100%;
             max-width: 500px;
+            display: none; /* Inicialmente escondido */
         }
-
-        .form-container { display: none; }
 
         h2 {
             text-align: center;
@@ -75,9 +74,24 @@
         .form-group button:hover {
             background-color: #45a049;
         }
+
+        .login-container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+        }
+
+        .login-container input {
+            margin-bottom: 15px;
+        }
     </style>
 </head>
 <body>
+    <!-- Tela de Login -->
     <div class="login-container" id="loginContainer">
         <h2>Login</h2>
         <form id="loginForm">
@@ -95,12 +109,13 @@
         </form>
     </div>
 
+    <!-- Formulário de Cadastro de Divergências (escondido inicialmente) -->
     <div class="form-container" id="formContainer">
         <h2>Divergências em Notas Fiscais</h2>
-        <form id="divergenciaForm">
+        <form action="https://formspree.io/f/{your_form_id}" method="POST">
             <div class="form-group">
                 <label>Filial</label>
-                <select id="filial" required>
+                <select name="filial" required>
                     <option value="ARTUR">ARTUR</option>
                     <option value="FLORIANO">FLORIANO</option>
                     <option value="JOTA">JOTA</option>
@@ -108,6 +123,64 @@
                     <option value="PONTO">PONTO</option>
                 </select>
             </div>
+
+            <div class="form-group">
+                <label>Transportadora</label>
+                <select name="transportadora" required>
+                    <option value="BRASPRESS">BRASPRESS</option>
+                    <option value="OUTROS">OUTROS</option>
+                </select>
+            </div>
+
+            <div class="form-group" id="outrosTransportadora" style="display: none;">
+                <label for="outraTransportadora">Qual é a Transportadora?</label>
+                <input type="text" id="outraTransportadora" name="outraTransportadora">
+            </div>
+
+            <div class="form-group">
+                <label for="dataRecebimento">Data de Recebimento</label>
+                <input type="date" id="dataRecebimento" name="dataRecebimento" required>
+            </div>
+
+            <div class="form-group">
+                <label for="notaFiscal">Número da Nota Fiscal</label>
+                <input type="text" id="notaFiscal" name="notaFiscal" required>
+            </div>
+
+            <div class="form-group">
+                <label for="serieNota">Série da Nota Fiscal</label>
+                <input type="text" id="serieNota" name="serieNota" required>
+            </div>
+
+            <div class="form-group">
+                <label for="referencia">Referência</label>
+                <input type="text" id="referencia" name="referencia" maxlength="4" required>
+            </div>
+
+            <div class="form-group">
+                <label for="cor">Cor</label>
+                <input type="text" id="cor" name="cor" maxlength="6" required>
+            </div>
+
+            <div class="form-group">
+                <label for="tamanho">Tamanho</label>
+                <input type="text" id="tamanho" name="tamanho" required>
+            </div>
+
+            <div class="form-group">
+                <label for="quantidade">Quantidade</label>
+                <input type="number" id="quantidade" name="quantidade" required>
+            </div>
+
+            <div class="form-group">
+                <label>Divergência</label>
+                <select name="divergencia" required>
+                    <option value="">Selecione uma opção</option>
+                    <option value="MERCADORIA PASSANDO">MERCADORIA PASSANDO</option>
+                    <option value="MERCADORIA FALTANDO">MERCADORIA FALTANDO</option>
+                </select>
+            </div>
+
             <div class="form-group">
                 <button type="submit">Enviar</button>
             </div>
@@ -115,67 +188,66 @@
     </div>
 
     <script>
+        // Defina os usuários e senhas permitidos
         const users = [
             { username: 'admin', password: 'senha123' },
             { username: 'user1', password: 'senha456' },
             { username: 'user2', password: 'senha789' }
         ];
 
+        // Função para verificar o login
         function checkLogin() {
             if (localStorage.getItem('loggedIn') === 'true') {
-                document.getElementById('loginContainer').style.display = 'none';
-                document.getElementById('formContainer').style.display = 'block';
+                document.querySelector('.login-container').style.display = 'none';
+                document.querySelector('.form-container').style.display = 'block';
             } else {
-                document.getElementById('loginContainer').style.display = 'block';
-                document.getElementById('formContainer').style.display = 'none';
+                document.querySelector('.login-container').style.display = 'block';
+                document.querySelector('.form-container').style.display = 'none';
             }
         }
 
+        // Validação do login
         document.getElementById('loginForm').addEventListener('submit', function(event) {
             event.preventDefault();
+
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
+
+            // Verificar se as credenciais correspondem a algum usuário da lista
             const user = users.find(u => u.username === username && u.password === password);
+
             if (user) {
-                localStorage.setItem('loggedIn', 'true');
-                resetIdleTimer();
-                checkLogin();
+                // Login bem-sucedido
+                localStorage.setItem('loggedIn', 'true');  // Salva no localStorage que o usuário está logado
+                resetIdleTimer();  // Reinicia o timer de inatividade
+                checkLogin();  // Atualiza a interface
             } else {
                 alert('Usuário ou senha incorretos!');
             }
         });
 
+        // Função para monitorar inatividade
         let idleTimeout;
+
         function resetIdleTimer() {
+            // Limpar qualquer timeout anterior
             clearTimeout(idleTimeout);
+
+            // Definir novo timeout de 10 minutos (600000ms)
             idleTimeout = setTimeout(() => {
                 alert("Você foi deslogado por inatividade!");
                 localStorage.setItem('loggedIn', 'false');
                 checkLogin();
-            }, 600000);
+            }, 600000);  // 10 minutos
         }
 
+        // Monitorar atividade do usuário (movimento do mouse, pressionamento de tecla, etc.)
         window.addEventListener('mousemove', resetIdleTimer);
         window.addEventListener('keydown', resetIdleTimer);
         window.addEventListener('click', resetIdleTimer);
-        checkLogin();
 
-        document.getElementById('divergenciaForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            const formData = {
-                filial: document.getElementById('filial').value,
-            };
-            fetch('YOUR_DEPLOYED_SCRIPT_URL', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(formData)
-            })
-            .then(response => response.json())
-            .then(data => {
-                alert(data.message);
-            })
-            .catch(error => console.error('Erro:', error));
-        });
+        // Verifica o login no início
+        checkLogin();
     </script>
 </body>
 </html>
