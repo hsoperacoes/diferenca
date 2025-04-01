@@ -187,6 +187,13 @@
     </div>
 
     <script>
+        // Defina os usuários e senhas permitidos
+        const users = [
+            { username: 'admin', password: 'senha123' },
+            { username: 'user1', password: 'senha456' },
+            { username: 'user2', password: 'senha789' }
+        ];
+
         // Função para verificar o login
         function checkLogin() {
             if (localStorage.getItem('loggedIn') === 'true') {
@@ -205,18 +212,38 @@
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
 
-            // Usuário e senha pré-definidos
-            const correctUsername = 'admin';
-            const correctPassword = 'senha123';
+            // Verificar se as credenciais correspondem a algum usuário da lista
+            const user = users.find(u => u.username === username && u.password === password);
 
-            if (username === correctUsername && password === correctPassword) {
+            if (user) {
                 // Login bem-sucedido
                 localStorage.setItem('loggedIn', 'true');  // Salva no localStorage que o usuário está logado
+                resetIdleTimer();  // Reinicia o timer de inatividade
                 checkLogin();  // Atualiza a interface
             } else {
                 alert('Usuário ou senha incorretos!');
             }
         });
+
+        // Função para monitorar inatividade
+        let idleTimeout;
+
+        function resetIdleTimer() {
+            // Limpar qualquer timeout anterior
+            clearTimeout(idleTimeout);
+
+            // Definir novo timeout de 10 minutos (600000ms)
+            idleTimeout = setTimeout(() => {
+                alert("Você foi deslogado por inatividade!");
+                localStorage.setItem('loggedIn', 'false');
+                checkLogin();
+            }, 600000);  // 10 minutos
+        }
+
+        // Monitorar atividade do usuário (movimento do mouse, pressionamento de tecla, etc.)
+        window.addEventListener('mousemove', resetIdleTimer);
+        window.addEventListener('keydown', resetIdleTimer);
+        window.addEventListener('click', resetIdleTimer);
 
         // Verifica o login no início
         checkLogin();
