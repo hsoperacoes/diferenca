@@ -28,7 +28,7 @@
             border-radius: 8px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             width: 100%;
-            max-width: 600px;
+            max-width: 500px;
         }
 
         h2 {
@@ -45,7 +45,9 @@
         label {
             font-size: 14px;
             font-weight: bold;
-            display: block;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
         .checkbox-group {
@@ -53,6 +55,10 @@
             flex-direction: column;
             gap: 5px;
             margin-top: 5px;
+        }
+
+        input[type="checkbox"] {
+            margin-right: 10px;
         }
 
         input, select {
@@ -87,19 +93,19 @@
             <div class="form-group">
                 <label>Filial</label>
                 <div class="checkbox-group">
-                    <label><input type="checkbox" name="filial" value="ARTUR"> ARTUR</label>
-                    <label><input type="checkbox" name="filial" value="FLORIANO"> FLORIANO</label>
-                    <label><input type="checkbox" name="filial" value="JOTA"> JOTA</label>
-                    <label><input type="checkbox" name="filial" value="MODA"> MODA</label>
-                    <label><input type="checkbox" name="filial" value="PONTO"> PONTO</label>
+                    <label><input type="checkbox" name="filial" value="ARTUR">ARTUR</label>
+                    <label><input type="checkbox" name="filial" value="FLORIANO">FLORIANO</label>
+                    <label><input type="checkbox" name="filial" value="JOTA">JOTA</label>
+                    <label><input type="checkbox" name="filial" value="MODA">MODA</label>
+                    <label><input type="checkbox" name="filial" value="PONTO">PONTO</label>
                 </div>
             </div>
 
             <div class="form-group">
                 <label>Transportadora</label>
                 <div class="checkbox-group">
-                    <label><input type="checkbox" name="transportadora" value="BRASPRESS"> BRASPRESS</label>
-                    <label><input type="checkbox" id="chkOutros" value="OUTROS"> OUTROS</label>
+                    <label><input type="checkbox" name="transportadora" value="BRASPRESS">BRASPRESS</label>
+                    <label><input type="checkbox" id="chkOutros" value="OUTROS">OUTROS</label>
                 </div>
             </div>
 
