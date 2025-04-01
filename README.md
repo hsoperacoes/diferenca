@@ -80,7 +80,7 @@
             var form = document.getElementById("formulario");
             var formData = new FormData(form);
             
-            fetch("https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec", {
+            fetch("https://script.google.com/macros/s/AKfycbw5xq6i5Qoc0s3f-ZaQ6FCZdsjXrC_my8d0tmgr756hWZQqT9Olu9DjsGOYwTlvnBQA/exec", {
                 method: "POST",
                 body: formData
             })
