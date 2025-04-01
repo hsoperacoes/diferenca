@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
@@ -28,8 +27,8 @@
             border-radius: 8px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             width: 100%;
-            max-width: 500px;
-            display: none; /* Inicialmente escondido */
+            max-width: 800px;  /* Largura aumentada */
+            display: none;
         }
 
         h2 {
@@ -116,6 +115,7 @@
             <div class="form-group">
                 <label>Filial</label>
                 <select name="filial" required>
+                    <option value="">Selecione uma filial</option>  <!-- Removi a preseleção -->
                     <option value="ARTUR">ARTUR</option>
                     <option value="FLORIANO">FLORIANO</option>
                     <option value="JOTA">JOTA</option>
@@ -126,12 +126,13 @@
 
             <div class="form-group">
                 <label>Transportadora</label>
-                <select name="transportadora" required>
+                <select name="transportadora" id="transportadora" required>
                     <option value="BRASPRESS">BRASPRESS</option>
                     <option value="OUTROS">OUTROS</option>
                 </select>
             </div>
 
+            <!-- Campo de texto para o nome da transportadora "OUTROS" -->
             <div class="form-group" id="outrosTransportadora" style="display: none;">
                 <label for="outraTransportadora">Qual é a Transportadora?</label>
                 <input type="text" id="outraTransportadora" name="outraTransportadora">
@@ -188,11 +189,24 @@
     </div>
 
     <script>
+        // Exibir o campo de transportadora "OUTROS" quando selecionado
+        document.getElementById('transportadora').addEventListener('change', function() {
+            const outrosField = document.getElementById('outrosTransportadora');
+            if (this.value === 'OUTROS') {
+                outrosField.style.display = 'block';  // Exibe o campo
+            } else {
+                outrosField.style.display = 'none';  // Esconde o campo
+            }
+        });
+
         // Defina os usuários e senhas permitidos
         const users = [
             { username: 'admin', password: 'senha123' },
-            { username: 'user1', password: 'senha456' },
-            { username: 'user2', password: 'senha789' }
+            { username: 'a', password: 'hering0277' },
+            { username: 'f', password: 'hering0277' },
+            { username: 'j', password: 'hering0277' },
+            { username: 'm', password: 'hering0277' },
+            { username: 'p', password: 'hering0277' }
         ];
 
         // Função para verificar o login
