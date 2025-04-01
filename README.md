@@ -19,7 +19,6 @@
             min-height: 100vh;
             overflow-y: auto;
             padding: 20px;
-            position: relative;
         }
 
         .form-container {
@@ -27,9 +26,8 @@
             padding: 30px;
             border-radius: 8px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            width: 95%;
-            max-width: 1200px;
-            margin-bottom: 80px;
+            width: 90%;
+            max-width: 1000px;
         }
 
         h2 {
@@ -74,28 +72,33 @@
         .form-group button:hover {
             background-color: #45a049;
         }
-
-        /* Estilo do logo */
-        .logo-hering {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 180px;
-            height: auto;
-            z-index: 100;
-        }
-
-        @media (max-width: 768px) {
-            .logo-hering {
-                width: 120px;
-            }
-        }
     </style>
+    <script>
+        function enviarFormulario(event) {
+            event.preventDefault();
+            
+            var form = document.getElementById("formulario");
+            var formData = new FormData(form);
+            
+            fetch("https://script.google.com/macros/s/AKfycbw5xq6i5Qoc0s3f-ZaQ6FCZdsjXrC_my8d0tmgr756hWZQqT9Olu9DjsGOYwTlvnBQA/exec", {
+                method: "POST",
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert("SUA DIVERGÊNCIA FOI ENVIADA COM SUCESSO, AGRADECEMOS SEU APOIO");
+                form.reset();
+            })
+            .catch(error => {
+                alert("Erro ao enviar o formulário. Tente novamente.");
+            });
+        }
+    </script>
 </head>
 <body>
     <div class="form-container" id="formContainer">
         <h2>Divergências em Notas Fiscais</h2>
-        <form id="formulario">
+        <form id="formulario" onsubmit="enviarFormulario(event)">
             <div class="form-group">
                 <label>Filial</label>
                 <select name="filial" required>
@@ -170,41 +173,5 @@
             </div>
         </form>
     </div>
-
-    <!-- Logo Hering funcional -->
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Hering_logo.svg/1200px-Hering_logo.svg.png" 
-         alt="Logo Hering" 
-         class="logo-hering">
-
-    <script>
-        document.getElementById('transportadora').addEventListener('change', function() {
-            const outrosField = document.getElementById('outrosTransportadora');
-            outrosField.style.display = this.value === 'OUTROS' ? 'block' : 'none';
-        });
-
-        document.getElementById('formulario').addEventListener('submit', function(event) {
-            event.preventDefault();
-            
-            const form = event.target;
-            const formData = new FormData(form);
-            
-            fetch("https://script.google.com/macros/s/AKfycbw5xq6i5Qoc0s3f-ZaQ6FCZdsjXrC_my8d0tmgr756hWZQqT9Olu9DjsGOYwTlvnBQA/exec", {
-                method: "POST",
-                body: formData
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Erro na resposta do servidor');
-                }
-                return response.text();
-            })
-            .then(text => {
-                form.reset();
-            })
-            .catch(error => {
-                console.error("Erro:", error);
-            });
-        });
-    </script>
 </body>
 </html>
