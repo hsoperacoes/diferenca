@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+Você disse:
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
@@ -28,7 +28,8 @@
             border-radius: 8px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             width: 100%;
-            max-width: 800px;
+            max-width: 800px;  /* Largura aumentada */
+            display: none;
         }
 
         h2 {
@@ -73,16 +74,49 @@
         .form-group button:hover {
             background-color: #45a049;
         }
+
+        .login-container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+        }
+
+        .login-container input {
+            margin-bottom: 15px;
+        }
     </style>
 </head>
 <body>
-    <div class="form-container">
+    <!-- Tela de Login -->
+    <div class="login-container" id="loginContainer">
+        <h2>Login</h2>
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="username">Usuário</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Senha</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div class="form-group">
+                <button type="submit">Entrar</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Formulário de Cadastro de Divergências (escondido inicialmente) -->
+    <div class="form-container" id="formContainer">
         <h2>Divergências em Notas Fiscais</h2>
-        <form id="divergenciaForm">
+        <form action="https://formspree.io/f/{your_form_id}" method="POST">
             <div class="form-group">
                 <label>Filial</label>
                 <select name="filial" required>
-                    <option value="">Selecione uma filial</option>
+                    <option value="">Selecione uma filial</option>  <!-- Removi a preseleção -->
                     <option value="ARTUR">ARTUR</option>
                     <option value="FLORIANO">FLORIANO</option>
                     <option value="JOTA">JOTA</option>
@@ -99,6 +133,7 @@
                 </select>
             </div>
 
+            <!-- Campo de texto para o nome da transportadora "OUTROS" -->
             <div class="form-group" id="outrosTransportadora" style="display: none;">
                 <label for="outraTransportadora">Qual é a Transportadora?</label>
                 <input type="text" id="outraTransportadora" name="outraTransportadora">
@@ -155,34 +190,79 @@
     </div>
 
     <script>
+        // Exibir o campo de transportadora "OUTROS" quando selecionado
         document.getElementById('transportadora').addEventListener('change', function() {
             const outrosField = document.getElementById('outrosTransportadora');
-            outrosField.style.display = this.value === 'OUTROS' ? 'block' : 'none';
+            if (this.value === 'OUTROS') {
+                outrosField.style.display = 'block';  // Exibe o campo
+            } else {
+                outrosField.style.display = 'none';  // Esconde o campo
+            }
         });
 
-        document.getElementById("divergenciaForm").addEventListener("submit", function(event) {
+        // Defina os usuários e senhas permitidos
+        const users = [
+            { username: 'admin', password: 'senha123' },
+            { username: 'a', password: 'hering0277' },
+            { username: 'f', password: 'hering0277' },
+            { username: 'j', password: 'hering0277' },
+            { username: 'm', password: 'hering0277' },
+            { username: 'p', password: 'hering0277' }
+        ];
+
+        // Função para verificar o login
+        function checkLogin() {
+            if (localStorage.getItem('loggedIn') === 'true') {
+                document.querySelector('.login-container').style.display = 'none';
+                document.querySelector('.form-container').style.display = 'block';
+            } else {
+                document.querySelector('.login-container').style.display = 'block';
+                document.querySelector('.form-container').style.display = 'none';
+            }
+        }
+
+        // Validação do login
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
             event.preventDefault();
 
-            const formData = new FormData(this);
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
 
-            fetch("https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec", {
-                method: "POST",
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.result === "success") {
-                    alert("Dados enviados com sucesso!");
-                    this.reset();
-                } else {
-                    alert("Erro ao enviar os dados.");
-                }
-            })
-            .catch(error => {
-                console.error("Erro:", error);
-                alert("Erro na conexão com o servidor.");
-            });
+            // Verificar se as credenciais correspondem a algum usuário da lista
+            const user = users.find(u => u.username === username && u.password === password);
+
+            if (user) {
+                // Login bem-sucedido
+                localStorage.setItem('loggedIn', 'true');  // Salva no localStorage que o usuário está logado
+                resetIdleTimer();  // Reinicia o timer de inatividade
+                checkLogin();  // Atualiza a interface
+            } else {
+                alert('Usuário ou senha incorretos!');
+            }
         });
+
+        // Função para monitorar inatividade
+        let idleTimeout;
+
+        function resetIdleTimer() {
+            // Limpar qualquer timeout anterior
+            clearTimeout(idleTimeout);
+
+            // Definir novo timeout de 10 minutos (600000ms)
+            idleTimeout = setTimeout(() => {
+                alert("Você foi deslogado por inatividade!");
+                localStorage.setItem('loggedIn', 'false');
+                checkLogin();
+            }, 600000);  // 10 minutos
+        }
+
+        // Monitorar atividade do usuário (movimento do mouse, pressionamento de tecla, etc.)
+        window.addEventListener('mousemove', resetIdleTimer);
+        window.addEventListener('keydown', resetIdleTimer);
+        window.addEventListener('click', resetIdleTimer);
+
+        // Verifica o login no início
+        checkLogin();
     </script>
 </body>
 </html>
