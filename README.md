@@ -28,7 +28,7 @@
             border-radius: 8px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             width: 100%;
-            max-width: 1000px;
+            max-width: 600px;
         }
 
         h2 {
@@ -40,38 +40,27 @@
 
         .form-group {
             margin-bottom: 20px;
-            display: flex;
-            align-items: center;
         }
 
         label {
             font-size: 14px;
             font-weight: bold;
-            margin-right: 15px;
-            min-width: 150px;
-        }
-
-        input, select {
-            flex: 1;
-            padding: 10px;
-            font-size: 14px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
+            display: block;
         }
 
         .checkbox-group {
             display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
+            flex-direction: column;
+            gap: 5px;
+            margin-top: 5px;
         }
 
-        .checkbox-group input {
-            margin-right: 5px;
-        }
-
-        .note {
-            font-size: 12px;
-            color: #777;
+        input, select {
+            width: 100%;
+            padding: 10px;
+            font-size: 14px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
             margin-top: 5px;
         }
 
@@ -95,7 +84,6 @@
     <div class="form-container">
         <h2>Divergências em Notas Fiscais</h2>
         <form action="https://formspree.io/f/{your_form_id}" method="POST">
-            <!-- Campo Filial -->
             <div class="form-group">
                 <label>Filial</label>
                 <div class="checkbox-group">
@@ -107,7 +95,6 @@
                 </div>
             </div>
 
-            <!-- Campo Transportadora -->
             <div class="form-group">
                 <label>Transportadora</label>
                 <div class="checkbox-group">
@@ -121,7 +108,6 @@
                 <input type="text" id="outraTransportadora" name="outraTransportadora">
             </div>
 
-            <!-- Restante do formulário -->
             <div class="form-group">
                 <label for="dataRecebimento">Data de Recebimento</label>
                 <input type="date" id="dataRecebimento" name="dataRecebimento" required>
