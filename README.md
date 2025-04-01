@@ -78,7 +78,7 @@
 <body>
     <div class="form-container">
         <h2>Divergências em Notas Fiscais</h2>
-        <form id="divergenciaForm" action="https://formspree.io/f/{your_form_id}" method="POST">
+        <form id="divergenciaForm">
             <div class="form-group">
                 <label>Filial</label>
                 <select name="filial" required>
@@ -92,19 +92,6 @@
             </div>
 
             <div class="form-group">
-                <label>Transportadora</label>
-                <select name="transportadora" id="transportadora" required>
-                    <option value="BRASPRESS">BRASPRESS</option>
-                    <option value="OUTROS">OUTROS</option>
-                </select>
-            </div>
-
-            <div class="form-group" id="outrosTransportadora" style="display: none;">
-                <label for="outraTransportadora">Qual é a Transportadora?</label>
-                <input type="text" id="outraTransportadora" name="outraTransportadora">
-            </div>
-
-            <div class="form-group">
                 <label for="dataRecebimento">Data de Recebimento</label>
                 <input type="date" id="dataRecebimento" name="dataRecebimento" required>
             </div>
@@ -112,31 +99,6 @@
             <div class="form-group">
                 <label for="notaFiscal">Número da Nota Fiscal</label>
                 <input type="text" id="notaFiscal" name="notaFiscal" required>
-            </div>
-
-            <div class="form-group">
-                <label for="serieNota">Série da Nota Fiscal</label>
-                <input type="text" id="serieNota" name="serieNota" required>
-            </div>
-
-            <div class="form-group">
-                <label for="referencia">Referência</label>
-                <input type="text" id="referencia" name="referencia" maxlength="4" required>
-            </div>
-
-            <div class="form-group">
-                <label for="cor">Cor</label>
-                <input type="text" id="cor" name="cor" maxlength="6" required>
-            </div>
-
-            <div class="form-group">
-                <label for="tamanho">Tamanho</label>
-                <input type="text" id="tamanho" name="tamanho" required>
-            </div>
-
-            <div class="form-group">
-                <label for="quantidade">Quantidade</label>
-                <input type="number" id="quantidade" name="quantidade" required>
             </div>
 
             <div class="form-group">
@@ -155,13 +117,28 @@
     </div>
 
     <script>
-        document.getElementById('transportadora').addEventListener('change', function() {
-            const outrosField = document.getElementById('outrosTransportadora');
-            if (this.value === 'OUTROS') {
-                outrosField.style.display = 'block';
-            } else {
-                outrosField.style.display = 'none';
-            }
+        document.querySelector("#divergenciaForm").addEventListener("submit", function (event) {
+            event.preventDefault();
+            const form = event.target;
+            const formData = new FormData(form);
+
+            fetch("https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec", {
+                method: "POST",
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.result === "success") {
+                    alert("Dados enviados com sucesso!");
+                    form.reset();
+                } else {
+                    alert("Erro ao enviar os dados.");
+                }
+            })
+            .catch(error => {
+                console.error("Erro:", error);
+                alert("Erro na conexão com o servidor.");
+            });
         });
     </script>
 </body>
