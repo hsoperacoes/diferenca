@@ -91,41 +91,11 @@
             }
         }
     </style>
-    <script>
-        function enviarFormulario(event) {
-            event.preventDefault();
-            
-            var form = document.getElementById("formulario");
-            var formData = new FormData(form);
-            
-            fetch("https://script.google.com/macros/s/AKfycbw5xq6i5Qoc0s3f-ZaQ6FCZdsjXrC_my8d0tmgr756hWZQqT9Olu9DjsGOYwTlvnBQA/exec", {
-                method: "POST",
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                alert("SUA DIVERGÊNCIA FOI ENVIADA COM SUCESSO, AGRADECEMOS SEU APOIO");
-                form.reset();
-            })
-            .catch(error => {
-                alert("Erro ao enviar o formulário. Tente novamente.");
-            });
-        }
-
-        // Mostrar campo de transportadora quando selecionar "OUTROS"
-        document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('transportadora').addEventListener('change', function() {
-                const outrosField = document.getElementById('outrosTransportadora');
-                outrosField.style.display = this.value === 'OUTROS' ? 'block' : 'none';
-            });
-        });
-    </script>
 </head>
 <body>
     <div class="form-container" id="formContainer">
         <h2>Divergências em Notas Fiscais</h2>
-        <form id="formulario" onsubmit="enviarFormulario(event)">
-            <!-- Seus campos de formulário aqui -->
+        <form id="formulario">
             <div class="form-group">
                 <label>Filial</label>
                 <select name="filial" required>
@@ -138,8 +108,63 @@
                 </select>
             </div>
 
-            <!-- Demais campos do formulário -->
-            
+            <div class="form-group">
+                <label>Transportadora</label>
+                <select name="transportadora" id="transportadora" required>
+                    <option value="BRASPRESS">BRASPRESS</option>
+                    <option value="OUTROS">OUTROS</option>
+                </select>
+            </div>
+
+            <div class="form-group" id="outrosTransportadora" style="display: none;">
+                <label for="outraTransportadora">Qual é a Transportadora?</label>
+                <input type="text" id="outraTransportadora" name="outraTransportadora">
+            </div>
+
+            <div class="form-group">
+                <label for="dataRecebimento">Data de Recebimento</label>
+                <input type="date" id="dataRecebimento" name="dataRecebimento" required>
+            </div>
+
+            <div class="form-group">
+                <label for="notaFiscal">Número da Nota Fiscal</label>
+                <input type="text" id="notaFiscal" name="notaFiscal" required>
+            </div>
+
+            <div class="form-group">
+                <label for="serieNota">Série da Nota Fiscal</label>
+                <input type="text" id="serieNota" name="serieNota" required>
+            </div>
+
+            <div class="form-group">
+                <label for="referencia">Referência</label>
+                <input type="text" id="referencia" name="referencia" maxlength="4" required>
+            </div>
+
+            <div class="form-group">
+                <label for="cor">Cor</label>
+                <input type="text" id="cor" name="cor" maxlength="6" required>
+            </div>
+
+            <div class="form-group">
+                <label for="tamanho">Tamanho</label>
+                <input type="text" id="tamanho" name="tamanho" required>
+            </div>
+
+            <div class="form-group">
+                <label for="quantidade">Quantidade</label>
+                <input type="number" id="quantidade" name="quantidade" required>
+            </div>
+
+            <div class="form-group">
+                <label>Divergência</label>
+                <select name="divergencia" required>
+                    <option value="">Selecione uma opção</option>
+                    <option value="MERCADORIA PASSANDO">MERCADORIA PASSANDO</option>
+                    <option value="MERCADORIA FALTANDO">MERCADORIA FALTANDO</option>
+                </select>
+            </div>
+
             <div class="form-group">
                 <button type="submit">Enviar</button>
             </div>
@@ -150,5 +175,36 @@
     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Hering_logo.svg/1200px-Hering_logo.svg.png" 
          alt="Logo Hering" 
          class="logo-hering">
+
+    <script>
+        document.getElementById('transportadora').addEventListener('change', function() {
+            const outrosField = document.getElementById('outrosTransportadora');
+            outrosField.style.display = this.value === 'OUTROS' ? 'block' : 'none';
+        });
+
+        document.getElementById('formulario').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            const form = event.target;
+            const formData = new FormData(form);
+            
+            fetch("https://script.google.com/macros/s/AKfycbw5xq6i5Qoc0s3f-ZaQ6FCZdsjXrC_my8d0tmgr756hWZQqT9Olu9DjsGOYwTlvnBQA/exec", {
+                method: "POST",
+                body: formData
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Erro na resposta do servidor');
+                }
+                return response.text();
+            })
+            .then(text => {
+                form.reset();
+            })
+            .catch(error => {
+                console.error("Erro:", error);
+            });
+        });
+    </script>
 </body>
 </html>
