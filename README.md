@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
@@ -91,7 +92,7 @@
 </head>
 <body>
     <!-- Tela de Login -->
-    <div class="login-container">
+    <div class="login-container" id="loginContainer">
         <h2>Login</h2>
         <form id="loginForm">
             <div class="form-group">
@@ -109,7 +110,7 @@
     </div>
 
     <!-- Formulário de Cadastro de Divergências (escondido inicialmente) -->
-    <div class="form-container">
+    <div class="form-container" id="formContainer">
         <h2>Divergências em Notas Fiscais</h2>
         <form action="https://formspree.io/f/{your_form_id}" method="POST">
             <div class="form-group">
@@ -187,6 +188,17 @@
     </div>
 
     <script>
+        // Função para verificar o login
+        function checkLogin() {
+            if (localStorage.getItem('loggedIn') === 'true') {
+                document.querySelector('.login-container').style.display = 'none';
+                document.querySelector('.form-container').style.display = 'block';
+            } else {
+                document.querySelector('.login-container').style.display = 'block';
+                document.querySelector('.form-container').style.display = 'none';
+            }
+        }
+
         // Validação do login
         document.getElementById('loginForm').addEventListener('submit', function(event) {
             event.preventDefault();
@@ -200,12 +212,15 @@
 
             if (username === correctUsername && password === correctPassword) {
                 // Login bem-sucedido
-                document.querySelector('.login-container').style.display = 'none';  // Esconde a tela de login
-                document.querySelector('.form-container').style.display = 'block'; // Mostra o formulário de cadastro
+                localStorage.setItem('loggedIn', 'true');  // Salva no localStorage que o usuário está logado
+                checkLogin();  // Atualiza a interface
             } else {
                 alert('Usuário ou senha incorretos!');
             }
         });
+
+        // Verifica o login no início
+        checkLogin();
     </script>
 </body>
 </html>
