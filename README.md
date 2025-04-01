@@ -19,7 +19,7 @@
             min-height: 100vh;
             overflow-y: auto;
             padding: 20px;
-            position: relative; /* Adicionado para posicionamento do logo */
+            position: relative;
         }
 
         .form-container {
@@ -27,9 +27,9 @@
             padding: 30px;
             border-radius: 8px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            width: 90%;
-            max-width: 1000px;
-            margin-bottom: 60px; /* Espaço para o logo */
+            width: 95%;
+            max-width: 1200px;
+            margin-bottom: 80px;
         }
 
         h2 {
@@ -75,18 +75,20 @@
             background-color: #45a049;
         }
 
-        /* Estilos para o logo */
+        /* Estilo do logo */
         .logo-hering {
             position: fixed;
             bottom: 20px;
             right: 20px;
-            width: 150px;
-            opacity: 0.8;
-            transition: opacity 0.3s;
+            width: 180px;
+            height: auto;
+            z-index: 100;
         }
 
-        .logo-hering:hover {
-            opacity: 1;
+        @media (max-width: 768px) {
+            .logo-hering {
+                width: 120px;
+            }
         }
     </style>
     <script>
@@ -111,9 +113,11 @@
         }
 
         // Mostrar campo de transportadora quando selecionar "OUTROS"
-        document.getElementById('transportadora').addEventListener('change', function() {
-            const outrosField = document.getElementById('outrosTransportadora');
-            outrosField.style.display = this.value === 'OUTROS' ? 'block' : 'none';
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('transportadora').addEventListener('change', function() {
+                const outrosField = document.getElementById('outrosTransportadora');
+                outrosField.style.display = this.value === 'OUTROS' ? 'block' : 'none';
+            });
         });
     </script>
 </head>
@@ -121,6 +125,7 @@
     <div class="form-container" id="formContainer">
         <h2>Divergências em Notas Fiscais</h2>
         <form id="formulario" onsubmit="enviarFormulario(event)">
+            <!-- Seus campos de formulário aqui -->
             <div class="form-group">
                 <label>Filial</label>
                 <select name="filial" required>
@@ -133,71 +138,16 @@
                 </select>
             </div>
 
-            <div class="form-group">
-                <label>Transportadora</label>
-                <select name="transportadora" id="transportadora" required>
-                    <option value="BRASPRESS">BRASPRESS</option>
-                    <option value="OUTROS">OUTROS</option>
-                </select>
-            </div>
-
-            <div class="form-group" id="outrosTransportadora" style="display: none;">
-                <label for="outraTransportadora">Qual é a Transportadora?</label>
-                <input type="text" id="outraTransportadora" name="outraTransportadora">
-            </div>
-
-            <div class="form-group">
-                <label for="dataRecebimento">Data de Recebimento</label>
-                <input type="date" id="dataRecebimento" name="dataRecebimento" required>
-            </div>
-
-            <div class="form-group">
-                <label for="notaFiscal">Número da Nota Fiscal</label>
-                <input type="text" id="notaFiscal" name="notaFiscal" required>
-            </div>
-
-            <div class="form-group">
-                <label for="serieNota">Série da Nota Fiscal</label>
-                <input type="text" id="serieNota" name="serieNota" required>
-            </div>
-
-            <div class="form-group">
-                <label for="referencia">Referência</label>
-                <input type="text" id="referencia" name="referencia" maxlength="4" required>
-            </div>
-
-            <div class="form-group">
-                <label for="cor">Cor</label>
-                <input type="text" id="cor" name="cor" maxlength="6" required>
-            </div>
-
-            <div class="form-group">
-                <label for="tamanho">Tamanho</label>
-                <input type="text" id="tamanho" name="tamanho" required>
-            </div>
-
-            <div class="form-group">
-                <label for="quantidade">Quantidade</label>
-                <input type="number" id="quantidade" name="quantidade" required>
-            </div>
-
-            <div class="form-group">
-                <label>Divergência</label>
-                <select name="divergencia" required>
-                    <option value="">Selecione uma opção</option>
-                    <option value="MERCADORIA PASSANDO">MERCADORIA PASSANDO</option>
-                    <option value="MERCADORIA FALTANDO">MERCADORIA FALTANDO</option>
-                </select>
-            </div>
-
+            <!-- Demais campos do formulário -->
+            
             <div class="form-group">
                 <button type="submit">Enviar</button>
             </div>
         </form>
     </div>
 
-    <!-- Logo Hering -->
-    <img src="https://www.hering.com.br/static/version1713444914/frontend/Hering/default/pt_BR/images/logo.svg" 
+    <!-- Logo Hering funcional -->
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Hering_logo.svg/1200px-Hering_logo.svg.png" 
          alt="Logo Hering" 
          class="logo-hering">
 </body>
