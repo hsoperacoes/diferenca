@@ -255,13 +255,38 @@
             }, 600000);  // 10 minutos
         }
 
-        // Monitorar atividade do usuário (movimento do mouse, pressionamento de tecla, etc.)
-        window.addEventListener('mousemove', resetIdleTimer);
-        window.addEventListener('keydown', resetIdleTimer);
-        window.addEventListener('click', resetIdleTimer);
+        // Detectar atividade do usuário
+        document.addEventListener('mousemove', resetIdleTimer);
+        document.addEventListener('keydown', resetIdleTimer);
 
-        // Verifica o login no início
+        // Inicializar o estado de login ao carregar a página
         checkLogin();
+
+        // Enviar dados do formulário para o Google Apps Script
+        document.querySelector("#formContainer form").addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            const form = event.target;
+            const formData = new FormData(form);
+
+            fetch("https://script.google.com/macros/s/AKfycbw5xq6i5Qoc0s3f-ZaQ6FCZdsjXrC_my8d0tmgr756hWZQqT9Olu9DjsGOYwTlvnBQA/exec", {
+                method: "POST",
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.result === "success") {
+                    alert("Dados enviados com sucesso!");
+                    form.reset();
+                } else {
+                    alert("Erro ao enviar os dados.");
+                }
+            })
+            .catch(error => {
+                console.error("Erro:", error);
+                alert("Erro na conexão com o servidor.");
+            });
+        });
     </script>
 </body>
 </html>
