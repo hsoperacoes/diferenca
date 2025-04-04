@@ -74,12 +74,20 @@
         }
     </style>
     <script>
+        let isSubmitting = false;
+
         function enviarFormulario(event) {
             event.preventDefault();
-            
+
+            if (isSubmitting) {
+                alert("Por favor, aguarde até que o envio anterior seja concluído.");
+                return;
+            }
+
+            isSubmitting = true;
             var form = document.getElementById("formulario");
             var formData = new FormData(form);
-            
+
             fetch("https://script.google.com/macros/s/AKfycbw5xq6i5Qoc0s3f-ZaQ6FCZdsjXrC_my8d0tmgr756hWZQqT9Olu9DjsGOYwTlvnBQA/exec", {
                 method: "POST",
                 body: formData
@@ -88,10 +96,19 @@
             .then(data => {
                 alert("SUA DIVERGÊNCIA FOI ENVIADA COM SUCESSO, AGRADECEMOS SEU APOIO");
                 form.reset();
+                isSubmitting = false;
             })
             .catch(error => {
                 alert("Erro ao enviar o formulário. Tente novamente.");
+                isSubmitting = false;
             });
+
+            // Desabilita o botão por 5 segundos
+            const button = form.querySelector("button[type='submit']");
+            button.disabled = true;
+            setTimeout(() => {
+                button.disabled = false;
+            }, 5000);
         }
     </script>
 </head>
