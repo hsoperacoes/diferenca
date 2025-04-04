@@ -133,7 +133,7 @@
                     button.textContent = "Enviar";
                     isSubmitting = false;
                     loadingMessage.style.display = "none"; // Esconder mensagem após envio
-                }, 5000);  // Ajuste o tempo conforme necessário
+                }, 1000);  // Ajuste o tempo conforme necessário
             });
         }
     </script>
