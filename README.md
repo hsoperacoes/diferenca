@@ -72,6 +72,19 @@
         .form-group button:hover {
             background-color: #1765c1;
         }
+
+        .loading {
+            background-color: #d1d1d1;
+            cursor: not-allowed;
+        }
+
+        .loading-message {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 16px;
+            color: #1a73e8;
+            font-weight: 600;
+        }
     </style>
     <script>
         let isSubmitting = false;
@@ -79,15 +92,27 @@
         function enviarFormulario(event) {
             event.preventDefault();
 
+            // Impede o envio múltiplo
             if (isSubmitting) {
-                alert("Por favor, aguarde até que o envio anterior seja concluído.");
                 return;
             }
 
             isSubmitting = true;
+
+            // Desabilitar o botão e mostrar que o envio está em andamento
+            const button = event.target.querySelector("button[type='submit']");
+            const loadingMessage = document.getElementById("loadingMessage");
+
+            button.disabled = true;
+            button.classList.add("loading");
+            button.textContent = "Enviando...";
+
+            loadingMessage.style.display = "block"; // Mostrar mensagem de envio
+
             var form = document.getElementById("formulario");
             var formData = new FormData(form);
 
+            // Enviar os dados do formulário via fetch
             fetch("https://script.google.com/macros/s/AKfycbw5xq6i5Qoc0s3f-ZaQ6FCZdsjXrC_my8d0tmgr756hWZQqT9Olu9DjsGOYwTlvnBQA/exec", {
                 method: "POST",
                 body: formData
@@ -96,19 +121,20 @@
             .then(data => {
                 alert("SUA DIVERGÊNCIA FOI ENVIADA COM SUCESSO, AGRADECEMOS SEU APOIO");
                 form.reset();
-                isSubmitting = false;
             })
             .catch(error => {
                 alert("Erro ao enviar o formulário. Tente novamente.");
-                isSubmitting = false;
+            })
+            .finally(() => {
+                // Reabilitar o botão após 5 segundos ou após resposta
+                setTimeout(() => {
+                    button.disabled = false;
+                    button.classList.remove("loading");
+                    button.textContent = "Enviar";
+                    isSubmitting = false;
+                    loadingMessage.style.display = "none"; // Esconder mensagem após envio
+                }, 5000);  // Ajuste o tempo conforme necessário
             });
-
-            // Desabilita o botão por 5 segundos
-            const button = form.querySelector("button[type='submit']");
-            button.disabled = true;
-            setTimeout(() => {
-                button.disabled = false;
-            }, 5000);
         }
     </script>
 </head>
@@ -189,6 +215,11 @@
                 <button type="submit">Enviar</button>
             </div>
         </form>
+
+        <!-- Mensagem de "Enviando..." -->
+        <div id="loadingMessage" class="loading-message" style="display: none;">
+            Enviando... Por favor, aguarde.
+        </div>
     </div>
 </body>
 </html>
