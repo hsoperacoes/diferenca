@@ -192,10 +192,10 @@
                 <input type="text" id="cor" name="cor" maxlength="6" required>
             </div>
 
-            <div class="form-group">
-                <label for="tamanho">Tamanho</label>
-                <input type="text" id="tamanho" name="tamanho" required>
-            </div>
+           <div class="form-group">
+    <label for="tamanho">Tamanho</label>
+    <input type="text" id="tamanho" name="tamanho" maxlength="3" required>
+</div>
 
             <div class="form-group">
                 <label for="quantidade">Quantidade</label>
